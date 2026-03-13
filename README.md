@@ -8,21 +8,6 @@ Source code for the **DataStructure** course
 
 <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white"/>
 
-
----
-## Table of Contents
-- [DataStructure](#datastructure)
-  - [Table of Contents](#table-of-contents)
-  - [Project Overview](#project-overview)
-  - [Tech Stack](#tech-stack)
-    - [Language](#language)
-    - [Tools](#tools)
-  - [Features](#features)
-  - [Project Structure](#project-structure)
-  - [License](#license)
-  - [Author](#author)
-  - [Motivation:](#motivation)
-  
 ---
 
 ## Project Overview
