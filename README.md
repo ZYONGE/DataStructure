@@ -1,51 +1,92 @@
-
-<div>   
-    <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C Badge" />
-</div>
+<div align="center">
 
 # DataStructure
 
-Practice the basic concepts of data structures.
+Source code for the **DataStructure** course
+
+</div>
+
+<img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white"/>
+
+
+---
+## Table of Contents
+
+- [DataStructure](#datastructure)
+  - [Table of Contents](#table-of-contents)
+  - [Project Overview](#project-overview)
+  - [Tech Stack](#tech-stack)
+    - [Language](#language)
+    - [Tools](#tools)
+  - [Features](#features)
+  - [Project Structure](#project-structure)
+  - [License](#license)
+  - [Author](#author)
+  - [Motivation:](#motivation)
+
+---
+## Project Overview
+**Course:** DataStructure 
+**University:** Tech University of Korea (TUK)
+
+This repository contains practice code created while studying DataStructure Course.
+
+The purpose of this project is to:
+
+- practice core concepts
+- organize lecture exercises
+- build a structured learning record
+
+---
 
 ## Tech Stack
 
+### Language
+
 - C
-- Terminal / Command Line
+  
+### Tools
 
-## Feature
-- Implementation of basic data structures
-- Understanding memory management in C
+- Git
+- GitHub
+- Visual Studio Code
 
-## How to Compile and Run
+---
 
-### 1. Windows
-Use **MinGW / WSL / GCC**
-```bash
-gcc main.c -o main
-main.exe
-```
-### 2. MacOS / Linux
-```bash
-gcc main.c -o main
-./main
-```
+## Features
+
+This repository includes examples that demonstrate:
+
+- Stack implementation
+- Queue implementation
+- Linked list implementation
+- and so on...
 
 ## Project Structure
 
 ```
-DataStructure/
-├── .gitignore
-├── chap01/
-├── chap02/
+[PROJECT_NAME]/
+├── Chap_0313/                #
+├── Chap_(mmdd)/              # Upload date
+├── Chap_[03]/                # 
 ├── ...
+├── LICENSE     # MIT License
+├── .gitignore
 └── README.md
 ```
 
+---
+
 ## License
-This project was created for educational purposes. Free to use for study and practice.
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for details.
+
 
 ## Author
 Name: Jiyong Kim (ZYONGE)  
 Profile: https://github.com/ZYONGE  
 
-Motivation: This repository was created to store and review the practice exercises from the DataStructure course.
+## Motivation: 
+To build a foundational understanding of Data structure through structured practice and experimentation.
