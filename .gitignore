@@ -18,3 +18,16 @@ Thumbs.db
 # Logs and temp files
 *.log
 *.tmp
+
+# C source only
+*.o
+*.out
+*.exe
+
+# macOS / Xcode debug symbols
+*.dSYM/
+
+# Build folders
+build/
+Debug/
+Release/
