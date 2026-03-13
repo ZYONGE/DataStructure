@@ -11,7 +11,6 @@ Source code for the **DataStructure** course
 
 ---
 ## Table of Contents
-
 - [DataStructure](#datastructure)
   - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
@@ -23,8 +22,9 @@ Source code for the **DataStructure** course
   - [License](#license)
   - [Author](#author)
   - [Motivation:](#motivation)
-
+  
 ---
+
 ## Project Overview
 **Course:** DataStructure 
 **University:** Tech University of Korea (TUK)
