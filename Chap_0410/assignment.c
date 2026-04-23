@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
+#include <windows.h>
 
 #include "circular_deque.h"
 
@@ -25,9 +26,11 @@ int main (void) {
     push_loc(1, 0);
 
     while (!is_empty()) {
-        system("clear");
+        //system("clear");
+        system("cls");
         print_maze();
-        usleep(500000);
+        //usleep(500000);
+        Sleep(500);
 
         Element here = get_rear();
         int c = here.c;
