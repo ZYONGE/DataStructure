@@ -115,10 +115,14 @@ void replace(int pos, Element e){
 }
 
 // 특정 데이터(e)를 리스트에서 찾아 인덱스 반환 (없으면 -1 반환)
-int find(Element e){
+int find_entry(Element e){
     DNode* p = org.next;
     for (int i = 0; p != NULL; i++) {
+#ifdef ELEMENT_IS_STRUCT
+        if (p->data.id == e.id) {
+#else
         if (p->data == e) {
+#endif
             return i;
         }
         p = p->next;
@@ -139,7 +143,11 @@ void print_list(char msg[]){
     printf("--------------------\n");
     p = org.next;
     for (int i = 0; p != NULL; i++){
+#ifdef ELEMENT_IS_STRUCT
+        printf("이중연결 리스트[%2d] = id: %d, info: %s\n", i, p->data.id, p->data.info);
+#else
         printf("이중연결 리스트[%2d] = %d\n", i, p->data);
+#endif
         p = p->next;
     }
     printf("\n");
