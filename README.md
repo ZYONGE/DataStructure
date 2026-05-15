@@ -52,8 +52,7 @@ This repository includes examples that demonstrate:
 ```
 [PROJECT_NAME]/
 ├── Chap_0313/                #
-├── Chap_(mmdd)/              # Upload date
-├── Chap_[03]/                # 
+├── Chap_(mmdd)/              # Upload date                 
 ├── ...
 ├── LICENSE     # MIT License
 ├── .gitignore
