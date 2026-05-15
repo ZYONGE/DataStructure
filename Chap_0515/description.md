@@ -265,11 +265,90 @@ case 1: 삭제할 노드가 (단말 노드)리프 노드인 경우 → 단순히
 case 2: 삭제할 노드가 자식이 하나인 경우 → 자식 노드를 삭제할 노드의 위치로 올린다.
 case 3: 삭제할 노드가 자식이 둘인 경우 → 오른쪽 서브 트리에서 가장 작은 노드(후계자)를 찾아 삭제할 노드의 위치로 올린다. 후계자는 삭제할 노드보다 크지만 오른쪽 서브 트리에서 가장 작은 노드이므로 삭제할 노드의 왼쪽 서브 트리보다 작다. 후계자를 삭제할 노드의 위치로 올린 뒤, 후계자가 원래 있던 위치에서는 case 1 또는 case 2로 처리한다.
 
-BinSrchTree.c 기능 설명:
-'''c
-'''
-'''c
-'''
-'''c
-'''
-...
+## BinSrchTree.c 기능 설명:
+
+```c
+#define KEY(n) ((n)->data)
+```
+- 노드의 키 값을 접근하는 매크로. rvalue(읽기)뿐 아니라 lvalue(쓰기, `KEY(n) = temp`)로도 사용 가능하다.
+
+```c
+TNode* insert_bst(TNode* root, int key) {
+    if (root == NULL) {
+        return create_tree(key, NULL, NULL);
+    }
+    if (key < KEY(root)) {
+        root->left = insert_bst(root->left, key);
+    } else if (key > KEY(root)) {
+        root->right = insert_bst(root->right, key);
+    }
+    return root;
+}
+```
+- BST 조건을 유지하며 새 키를 삽입한다.
+- `key < 현재 노드` → 왼쪽 서브트리로 재귀, `key > 현재 노드` → 오른쪽 서브트리로 재귀.
+- 중복 키(`key == KEY(root)`)는 무시하고 그대로 반환한다.
+- 삽입 후 루트 포인터를 반환하므로 `root = insert_bst(root, key)` 형태로 호출한다.
+
+```c
+TNode* search_bst(TNode* root, int key) {
+    if (root == NULL) return NULL;
+    if (key == KEY(root)) return root;
+    if (key < KEY(root)) return search_bst(root->left, key);
+    else                 return search_bst(root->right, key);
+}
+```
+- BST 속성을 이용해 탐색 범위를 절반씩 줄인다.
+- 찾으면 해당 노드 포인터 반환, 없으면 `NULL` 반환.
+- 평균 시간복잡도 **O(log n)**, 최악(경사 트리) **O(n)**.
+
+```c
+TNode *delete_bst(TNode *root, int key) {
+    // 1단계: 삭제할 노드(n)와 부모(parent)를 반복문으로 탐색
+    while (n != NULL && KEY(n) != key) { ... }
+
+    // Case 1: 단말 노드 — 부모 링크를 끊고 free
+    if (n->left == NULL && n->right == NULL) { ... }
+
+    // Case 2: 자식이 하나 — 자식으로 바이패스하고 free
+    else if (n->left == NULL || n->right == NULL) { ... }
+
+    // Case 3: 자식이 둘 — 중위 후계자(오른쪽 서브트리 최솟값)로 대체
+    else {
+        TNode *successor = n->right;
+        while (successor->left != NULL) successor = successor->left;
+        TElement temp = KEY(successor);
+        root = delete_bst(root, temp); // 후계자 노드를 재귀 삭제
+        KEY(n) = temp;                 // 현재 노드 키를 후계자 키로 덮어씀
+    }
+    return root;
+}
+```
+- 삭제 연산은 반복문으로 대상 노드를 찾은 뒤 세 가지 케이스로 처리한다.
+- **Case 1** (단말): 부모의 해당 자식 링크를 `NULL`로 바꾸고 `free`.
+- **Case 2** (자식 1개): 자식 노드를 삭제 대상의 위치로 올리고(바이패스) `free`.
+- **Case 3** (자식 2개): 오른쪽 서브트리에서 가장 왼쪽(가장 작은) 노드가 **중위 후계자**. 후계자 키를 현재 노드에 복사하고, 후계자 원래 위치는 재귀 호출로 삭제(Case 1 또는 2로 귀결).
+
+**main()에서 구성하는 BST 구조:**
+```
+         50
+        /    \
+      30      70
+     /  \    /  \
+   20   40  60   80
+```
+
+**실행 결과 및 과정:**
+```
+Pre-order before deletion:          [50] [30] [20] [40] [70] [60] [80]
+Searching for 40: Found
+Pre-order after deleting 'B'(30):   [50] [40] [20] [70] [60] [80]
+Pre-order after deleting 'F'(60):   [50] [40] [20] [70] [80]
+Pre-order after deleting 'C'(70):   [50] [40] [20] [80]
+```
+
+| 삭제 대상 | 케이스 | 처리 방법 |
+|---|---|---|
+| B(30), 자식 2개 | Case 3 | 후계자 40(오른쪽 서브트리 최솟값)으로 대체 → 40 위치는 Case 1로 삭제 |
+| F(60), 단말 | Case 1 | 부모 C(70)의 left 링크를 NULL로 변경 |
+| C(70), 자식 1개 | Case 2 | 자식 G(80)을 C 위치로 올림 |

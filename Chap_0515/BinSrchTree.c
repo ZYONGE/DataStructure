@@ -1,7 +1,7 @@
 // 노드의 키(데이터) 접근 매크로 — lvalue로도 사용 가능하여 값 변경에도 쓰임
 #define KEY(n) ((n)->data)
 // 노드 방문 시 데이터를 출력하는 매크로
-#define VisitNode(n) (printf("[%c] ", (n)->data))
+#define VisitNode(n) (printf("[%d] ", (n)->data))
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +31,20 @@ void delete_tree(TNode* node) {
         delete_tree(node->right);
         free(node);
     }
+}
+
+// BST 삽입: key < 현재 노드 → 왼쪽, key > 현재 노드 → 오른쪽으로 재귀 삽입
+// 중복 키는 무시하며, 삽입 후 루트를 반환
+TNode* insert_bst(TNode* root, int key) {
+    if (root == NULL) {
+        return create_tree(key, NULL, NULL);
+    }
+    if (key < KEY(root)) {
+        root->left = insert_bst(root->left, key);
+    } else if (key > KEY(root)) {
+        root->right = insert_bst(root->right, key);
+    }
+    return root;
 }
 
 // BST 탐색: key < 현재 노드 → 왼쪽, key > 현재 노드 → 오른쪽으로 재귀 탐색
@@ -121,31 +135,38 @@ void preorder(TNode* node) {
 int main() {
 
     int keys[] = {50, 30, 70, 20, 40, 60, 80};
-    // BST 생성: A(50) → B(30), C(70) → D(20), E(40), F(60), G(80)
-    TNode* d = create_tree(keys[0], NULL, NULL);
-    TNode* e = create_tree(keys[1], NULL, NULL);
-    TNode* b = create_tree(keys[2], d, e);
-    TNode* f = create_tree(keys[3], NULL, NULL);
-    TNode* g = create_tree(keys[4], NULL, NULL);
-    TNode* c = create_tree(keys[5], f, g);
-    TNode* root = create_tree(keys[6], b, c);
+    // BST 생성:        A(50)
+    //                /      \
+    //            B(30)      C(70)
+    //            /   \      /   \
+    //          D(20) E(40) F(60) G(80)
+    TNode* d    = create_tree(keys[3], NULL, NULL); // D(20) 단말
+    TNode* e    = create_tree(keys[4], NULL, NULL); // E(40) 단말
+    TNode* b    = create_tree(keys[1], d, e);       // B(30) left=D, right=E
+    TNode* f    = create_tree(keys[5], NULL, NULL); // F(60) 단말
+    TNode* g    = create_tree(keys[6], NULL, NULL); // G(80) 단말
+    TNode* c    = create_tree(keys[2], f, g);       // C(70) left=F, right=G
+    TNode* root = create_tree(keys[0], b, c);       // A(50) left=B, right=C
 
     printf("Pre-order before deletion: ");
     preorder(root);
     printf("\n");
 
+    TNode* found = search_bst(root, keys[4]); // E(40) 탐색
+    printf("Searching for %d: %s\n", keys[4], (found != NULL) ? "Found" : "Not Found");
+
     // 노드 삭제 테스트
-    root = delete_bst(root, keys[2]); // 자식 2개인 노드 삭제
+    root = delete_bst(root, keys[1]); // B(30): 자식 2개인 노드 삭제 (Case 3)
     printf("Pre-order after deleting 'B': ");
     preorder(root);
     printf("\n");
 
-    root = delete_bst(root, keys[3]); // 단말 노드 삭제
+    root = delete_bst(root, keys[5]); // F(60): 단말 노드 삭제 (Case 1)
     printf("Pre-order after deleting 'F': ");
     preorder(root);
     printf("\n");
 
-    root = delete_bst(root, keys[5]); // 자식 2개인 노드 삭제
+    root = delete_bst(root, keys[2]); // C(70): 자식 1개인 노드 삭제 (F 삭제 후 G만 남음, Case 2)
     printf("Pre-order after deleting 'C': ");
     preorder(root);
     printf("\n");
